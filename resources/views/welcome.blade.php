@@ -3,7 +3,7 @@
 <head>
     <title>Parking System</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css"/>
     <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
@@ -47,7 +47,8 @@
                     <div class="form-group">
                         <label for="name" class="col-sm-2 control-label">Brand</label>
                         <div class="col-sm-12">
-                            <input type="text" class="form-control" id="brand" name="brand" placeholder="Volvo" value="" maxlength="50" required>
+                            <input type="text" class="form-control" id="brand" name="brand" placeholder="Volvo" value=""
+                                   maxlength="50" required>
                             <span class="help-block"></span>
                         </div>
                     </div>
@@ -89,7 +90,8 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label">Comment</label>
                         <div class="col-sm-12">
-                            <textarea id="comment" name="comment" required="" placeholder="Enter Details" class="form-control"></textarea>
+                            <textarea id="comment" name="comment" required="" placeholder="Enter Details"
+                                      class="form-control"></textarea>
                         </div>
                     </div>
 
@@ -122,9 +124,10 @@
                 {data: 'car.brand', name: 'car.brand'},
                 {data: 'car.model', name: 'car.model'},
                 {data: 'car.number', name: 'car.number'},
-                {data: 'paid', name: 'paid',
+                {
+                    data: 'paid', name: 'paid',
                     // render: function (data, type, row) {}
-                    },
+                },
                 {data: 'color', name: 'color'},
                 {data: 'comment', name: 'comment'},
                 {data: 'action', name: 'action', orderable: false, searchable: false},
@@ -141,7 +144,7 @@
 
         $('body').on('click', '.editParking', function () {
             var parking_id = $(this).data('id');
-            $.get("{{ route('parkingAjax.index') }}" +'/' + parking_id +'/edit', function (data) {
+            $.get("{{ route('parkingAjax.index') }}" + '/' + parking_id + '/edit', function (data) {
                 $('#modelHeading').html("Edit Parking");
                 $('#ajaxModel').modal('show');
                 $('#parking_id').val(parking_id);
@@ -149,7 +152,7 @@
                 $('#model').val(data.car.model);
                 $('#number').val(data.car.number);
                 $('#paid').prop('checked', data.paid);
-                $('#color option[value="'+ data.car.color +'"]').prop('selected', true);
+                $('#color option[value="' + data.car.color + '"]').prop('selected', true);
                 $('#comment').val(data.comment);
             })
         });
@@ -159,7 +162,7 @@
 
             let data = {}, error = false;
             $.each($('#productForm').serializeArray(),
-                function(i, v) {
+                function (i, v) {
                     data[v.name] = v.value;
                 });
 
@@ -219,12 +222,12 @@
 
         $('body').on('click', '.deleteParking', function () {
 
-            var product_id = $(this).data("id");
+            var parking_id = $(this).data("id");
 
             if (confirm("Are You sure want to delete !")) {
                 $.ajax({
                     type: "DELETE",
-                    url: "{{ route('parkingAjax.store') }}"+'/'+product_id,
+                    url: "{{ route('parkingAjax.store') }}" + '/' + parking_id,
                     success: function (data) {
                         table.draw();
                     },
